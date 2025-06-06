@@ -1,4 +1,5 @@
 use crate::MatrixError::{self, DataMismatch, InvalidMatrixSize};
+use std::ops::Neg;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct BuilderMatrix {
@@ -12,6 +13,26 @@ pub struct Matrix {
     pub rows: usize,
     pub cols: usize,
     pub data: Vec<Vec<f64>>,
+}
+
+impl Neg for Matrix {
+    type Output = Self;
+
+    fn neg(self) -> Self::Output {
+        let neg_data = self.data
+            .into_iter()
+            .map(|row| {
+                row.into_iter()
+                    .map(|value| -value)
+                    .collect()
+            }).collect();
+            
+        Self {
+            rows: self.rows,
+            cols: self.cols,
+            data: neg_data,
+        }
+    }
 }
 
 impl std::fmt::Display for Matrix {
