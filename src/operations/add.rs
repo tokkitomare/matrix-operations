@@ -24,7 +24,9 @@ impl Add for Matrix {
             return Err(MatrixError::DimensionMismatch);
         }
 
-        let mut result = Matrix::builder().done()?;
+        // Build a new matrix with the same dimensions as the `self` matrix (and `other` as well).
+        // It will ensure that `result` variable can be accessed in the loop below.
+        let mut result = Matrix::builder().rows(self.rows).cols(self.cols).done()?;
         for i in 0..self.rows {
             for j in 0..self.cols {
                 result.data[i][j] = self.data[i][j] + other.data[i][j];
