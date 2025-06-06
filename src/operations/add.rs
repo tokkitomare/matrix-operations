@@ -1,6 +1,6 @@
 use crate::matrix::*;
 use crate::errors::MatrixError;
-pub trait Add {
+pub trait Add<Other = Self> {
     type Output;
 
     /// Adds two matrices together.
@@ -13,13 +13,13 @@ pub trait Add {
     /// # Returns
     ///
     /// A new matrix that is the result of adding the two matrices together.
-    fn add(self, other: Self) -> Result<Self::Output, MatrixError>;
+    fn add(&self, other: Other) -> Result<Self::Output, MatrixError>;
 }
 
 impl Add for Matrix {
     type Output = Matrix;
 
-    fn add(self, other: Self) -> Result<Self::Output, MatrixError> {
+    fn add(&self, other: Self) -> Result<Self::Output, MatrixError> {
         if !self.verify(false, other.clone()) {
             return Err(MatrixError::DimensionMismatch);
         }
