@@ -185,7 +185,7 @@ impl Matrix {
     /// ```
     pub fn verify(&self, is_mult: bool, other: Self) -> bool {
         match is_mult {
-            true => if self.rows == other.cols { return true; },
+            true => if self.cols == other.rows { return true; },
             false => if self.rows == other.rows && self.cols == other.cols { return true; }
         }
         false
